@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.npm/
+.pnpm-store/
+.pnpm-debug.log*
+
+# Package manager lockfiles (optional; keep if you want to track them)
+# package-lock.json
+# pnpm-lock.yaml
+# yarn.lock
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+/dist
+/build
+/.next
+/out
+/.cache
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Linux
+*~
+
+# Windows
+Desktop.ini
+$RECYCLE.BIN/
+
+# Environment files
+.env
+.env.*
+!.env.example
