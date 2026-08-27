@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --outDir dist",
+    "clean": "rm -rf dist",
     "start": "tsx",
     "newFile": "tsx scripts/newFile.ts"
   },
