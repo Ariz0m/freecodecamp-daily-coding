@@ -1,23 +1,23 @@
 function getLaptopCost(laptops: number[], budget: number): number {
-    let secondMostExprensive = 0, mostExpensive = 0, mostExpensiveWithinBudget = 0;
+    let secondMostExpensive = 0, mostExpensive = 0, mostExpensiveWithinBudget = 0;
 
     const isWithinBudget = (cost: number) => cost <= budget;
     const isTheMostExpensive = (cost: number) => cost > mostExpensive;
-    const isTheSecondMostExpensive = (cost: number) => cost > secondMostExprensive && cost < mostExpensive && cost !== mostExpensive;
+    const isTheSecondMostExpensive = (cost: number) => cost > secondMostExpensive && cost < mostExpensive && cost !== mostExpensive;
 
     laptops.forEach((laptop) => {
         if (isTheMostExpensive(laptop)) {
-            secondMostExprensive = mostExpensive;
+            secondMostExpensive = mostExpensive;
             mostExpensive = laptop;
         } else if (isTheSecondMostExpensive(laptop)) {
-            secondMostExprensive = laptop;
+            secondMostExpensive = laptop;
         }
         if (isWithinBudget(laptop) && laptop > mostExpensiveWithinBudget && laptop !== mostExpensiveWithinBudget) {
             mostExpensiveWithinBudget = laptop;
         }
     });
 
-    return isWithinBudget(secondMostExprensive) ? secondMostExprensive : mostExpensiveWithinBudget;
+    return isWithinBudget(secondMostExpensive) ? secondMostExpensive : mostExpensiveWithinBudget;
 }
 
 
