@@ -8,7 +8,7 @@
     "build": "tsc --outDir dist",
     "clean": "rm -rf dist",
     "start": "tsx",
-    "newFile": "tsx scripts/newFile.ts"
+    "newFile": "volta run node scripts/newFile.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +16,14 @@
   "packageManager": "pnpm@11.24.0",
   "type": "module",
   "devDependencies": {
+    "@types/node": "^26.4.0",
     "tsx": "^4.23.12",
     "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=26"
+  },
+  "volta": {
+    "node": "26.8.1"
   }
 }
