@@ -8,7 +8,7 @@
     "build": "tsc --outDir dist",
     "clean": "rm -rf dist",
     "start": "tsx",
-    "newFile": "volta run node scripts/newFile.ts"
+    "newFile": "volta run npx tsx scripts/newFile.ts"
   },
   "keywords": [],
   "author": "",
