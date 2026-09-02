@@ -26,8 +26,7 @@ function normalizeIndex(index: number): number {
 
 function decode(message: string, shift: number): string {
     let decodedMessage: string = '';
-    for (let i = 0; i < message.length; i++) {
-        const char = message[i];
+    for (const char of message) {
         if (!lettersRegex.test(char)) {
             decodedMessage += char;
             continue;
@@ -42,8 +41,7 @@ function decode(message: string, shift: number): string {
 
 function encode(message: string, shift: number): string {
     let encodedMessage: string = '';
-    for (let i = 0; i < message.length; i++) {
-        const char = message[i];
+    for (const char of message) {
         if (!lettersRegex.test(char)) {
             encodedMessage += char;
             continue;
