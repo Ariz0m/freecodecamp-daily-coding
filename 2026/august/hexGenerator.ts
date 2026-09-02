@@ -23,16 +23,20 @@ function generateHex(color: RGB | string): string {
     const maxHexNumber = 255;
 
     const generateRandomNumber = (limit: number = maxHexNumber) => {
-        return Math.floor(Math.random() * (limit - hexBase + 1)) + hexBase;
+        return Math.floor(Math.random() * limit + 1);
+    }
+
+    const assertItsDouble = (str: string) => {
+        return str.padStart(2, '0');
     }
 
     let result: string = '';
     const maxNumber = generateRandomNumber();
 
-    const candidateHex = maxNumber.toString(hexBase);
+    const candidateHex = assertItsDouble(maxNumber.toString(hexBase));
 
     for (const element of validColors) {
-        result += element !== color ? generateRandomNumber(maxNumber - 1).toString(hexBase) : candidateHex;
+        result += element !== color ? assertItsDouble(generateRandomNumber(maxNumber - 1).toString(hexBase)) : candidateHex;
     }
 
     return result;
