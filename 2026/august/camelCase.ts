@@ -8,8 +8,7 @@ function toCamelCase(str: string): string {
     const separatorRegex = /[\s_-]+/;
     let result: string = '';
     let capitalizeNext: boolean = false;
-    for (let i = 0; i < lowerCaseStr.length; i++) {
-        const char = lowerCaseStr[i];
+    for (const char of lowerCaseStr) {
         if (separatorRegex.test(char)) {
             capitalizeNext = true;
             continue;
