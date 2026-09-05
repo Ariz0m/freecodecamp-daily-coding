@@ -4,7 +4,7 @@ function isValidIPv4(ipv4: string): boolean {
     if (splittedIp.length !== 4) return false;
 
     for (const part of splittedIp) {
-        if (part.startsWith('0') && part.length > 1) return false;
+        if (part.length > 1 && part.startsWith('0')) return false;
 
         const toNumber = parseInt(part);
         if (toNumber < 0 || toNumber > 255) return false;
