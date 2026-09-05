@@ -8,6 +8,10 @@ function isPangram(sentence: string, letters: string): boolean {
         .map(char => [char, true])
     );
     
+    const allWords = lettersUsedMap.keys().toArray().length;
+
+    if (letters.length !== allWords) return false;
+
     for (const char of letters) {
         if (!lettersUsedMap.get(char)) return false;
     }
