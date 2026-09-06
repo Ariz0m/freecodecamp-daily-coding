@@ -1,6 +1,7 @@
 import {
   DEFAULT_LOCALE,
   parseMonth,
+  parseYear,
   requireTemporal,
 } from "src/utils/date";
 
@@ -11,6 +12,15 @@ export type CalendarDayContext = {
   year?: number;
   locale?: string;
 };
+
+export type DesiredMonthContext =
+  | {
+      month: string | number;
+      year?: string | number;
+    }
+  | string
+  | Date
+  | Temporal.PlainDate;
 
 export const CHALLENGE_DAY_HREF_PREFIX = "/learn/daily-coding-challenge/";
 
@@ -61,6 +71,78 @@ export function getChallengeDayAriaLabelSelector(
   locale: string = DEFAULT_LOCALE,
 ): string {
   return `a[data-playwright-test-label="calendar-day"][aria-label="${formatChallengeAriaLabel(date, locale)}"]`;
+}
+
+export function parseDisplayedMonthLabel(
+  monthLabel: string,
+  year: number,
+  locale: string = DEFAULT_LOCALE,
+): Temporal.PlainYearMonth {
+  requireTemporal();
+
+  return Temporal.PlainYearMonth.from({
+    year,
+    month: parseMonth(monthLabel.trim(), 1, locale),
+  });
+}
+
+export function resolveDesiredYearMonth(
+  desiredDay: DesiredMonthContext,
+  referenceDate: Temporal.PlainDate = Temporal.Now.plainDateISO(),
+  locale: string = DEFAULT_LOCALE,
+): Temporal.PlainYearMonth {
+  requireTemporal();
+
+  if (desiredDay instanceof Date) {
+    return Temporal.PlainYearMonth.from({
+      year: desiredDay.getFullYear(),
+      month: desiredDay.getMonth() + 1,
+    });
+  }
+
+  if (
+    typeof desiredDay === "object" &&
+    "day" in desiredDay &&
+    "month" in desiredDay &&
+    "year" in desiredDay
+  ) {
+    return desiredDay.toPlainYearMonth();
+  }
+
+  if (typeof desiredDay === "string") {
+    const trimmed = desiredDay.trim();
+    const monthYearMatch = /^([A-Za-z]+)\s+(\d{4})$/.exec(trimmed);
+    if (monthYearMatch) {
+      const monthName = monthYearMatch[1];
+      const yearPart = monthYearMatch[2];
+      if (monthName === undefined || yearPart === undefined) {
+        throw new Error(`Invalid month context: "${desiredDay}".`);
+      }
+
+      return Temporal.PlainYearMonth.from({
+        year: parseYear(yearPart, referenceDate.year),
+        month: parseMonth(monthName, referenceDate.month, locale),
+      });
+    }
+
+    return Temporal.PlainYearMonth.from({
+      year: referenceDate.year,
+      month: parseMonth(trimmed, referenceDate.month, locale),
+    });
+  }
+
+  const month =
+    typeof desiredDay.month === "number"
+      ? desiredDay.month
+      : parseMonth(desiredDay.month, referenceDate.month, locale);
+  const year =
+    desiredDay.year === undefined
+      ? referenceDate.year
+      : typeof desiredDay.year === "number"
+        ? desiredDay.year
+        : parseYear(desiredDay.year, referenceDate.year);
+
+  return Temporal.PlainYearMonth.from({ year, month });
 }
 
 function parseCalendarDayString(
