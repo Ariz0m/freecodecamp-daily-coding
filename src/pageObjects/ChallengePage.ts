@@ -8,4 +8,12 @@ export class ChallengePage extends HomePage {
     get testOutputs() {
         return this.$$('.test-output');
     }
+
+    get codeCanvas() {
+        return this.$('[data-playwright-test-label="editor-pane"]');
+    }
+
+    get functionAndParams() {
+        const code = this.codeCanvas;
+    }
 }
