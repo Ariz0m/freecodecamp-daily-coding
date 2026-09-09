@@ -8,7 +8,7 @@ import {
     type CalendarDayInput,
     type DesiredMonthContext,
 } from "src/utils/date/calendar";
-import { parseMonth, requireTemporal } from "utils/date/date";
+import { parseMonth } from "utils/date/parseMonth";
 import { ChallengesPeriodicityText } from "src/constants/challengesPeriodicityText";
 
 export class CalendarPage extends HomePage {
@@ -44,7 +44,6 @@ export class CalendarPage extends HomePage {
     }
 
     async moveToDesiredMonth(desiredDay: DesiredMonthContext) {
-        requireTemporal();
 
         const target = resolveDesiredYearMonth(desiredDay);
         let displayed = await this.getDisplayedYearMonth();
