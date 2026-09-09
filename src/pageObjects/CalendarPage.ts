@@ -1,6 +1,4 @@
 import { HomePage } from "pageObjects/HomePage";
-import { getChallengePeriodicityText } from "utils/getChallengePeriodicityText";
-import { ChallengesPeriodicity } from "constants/challengesPeriodicity";
 import {
     getChallengeDayHrefSelector,
     parseDisplayedMonthLabel,
@@ -11,12 +9,13 @@ import {
     type DesiredMonthContext,
 } from "src/utils/date/calendar";
 import { parseMonth, requireTemporal } from "utils/date/date";
+import { ChallengesPeriodicityText } from "src/constants/challengesPeriodicityText";
 
 export class CalendarPage extends HomePage {
     private displayedYear = Temporal.Now.plainDateISO().year;
 
     get goToTodaysChallengeButton() {
-        return this.$(`a=${getChallengePeriodicityText(ChallengesPeriodicity.DAILY)}`);
+        return this.$(`a=${ChallengesPeriodicityText.DAILY}`);
     }
 
     get currentDisplayedMonth() {

@@ -1,6 +1,6 @@
 import { join } from "node:path";
 
-import type { ChallengeLocation } from "src/types/challengeLocation";
+import type { ChallengeLocation } from "types/challengeLocation";
 
 export function getSolutionDir(
   rootDir: string,

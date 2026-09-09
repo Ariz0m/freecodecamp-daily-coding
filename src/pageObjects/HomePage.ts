@@ -26,7 +26,7 @@ export class HomePage {
     return this.$('[data-playwright-test-label="header-universal-nav-logo"]');
   }
 
-  protected dailyCodingClass = '.daily-coding-challenge-button';
+  private dailyCodingClass = '.daily-coding-challenge-button';
 
   protected async getChallengeButton(period: ChallengesPeriodicity) {
     const candidates = this.$$(this.dailyCodingClass);

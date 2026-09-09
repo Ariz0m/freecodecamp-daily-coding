@@ -12,7 +12,7 @@
       "solution/*": ["./*.ts"],
       "constants/*": ["./src/constants/*.ts"],
       "pageObjects/*": ["./src/pageObjects/*.ts"],
-      "types": ["./src/types/*.ts"]
+      "types/*": ["./src/types/*.ts"]
     },
 
     "strict": true,

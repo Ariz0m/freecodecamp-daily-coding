@@ -1,11 +1,12 @@
 import { ChallengesPeriodicity } from "constants/challengesPeriodicity";
+import { ChallengesPeriodicityText } from "constants/challengesPeriodicityText";
 
-export function getChallengePeriodicityText(period: ChallengesPeriodicity) {
+export function getChallengePeriodicityText(period: ChallengesPeriodicity): ChallengesPeriodicityText {
     switch (period) {
         case ChallengesPeriodicity.ARCHIVE:
-            return 'Go to Daily Coding Challenge Archive';
+            return ChallengesPeriodicityText.ARCHIVE;
         
         case ChallengesPeriodicity.DAILY:
-            return `Go to Today's Challenge`;
+            return ChallengesPeriodicityText.DAILY;
     }
 }

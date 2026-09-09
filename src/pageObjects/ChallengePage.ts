@@ -1,4 +1,4 @@
-import { HomePage } from "src/pageObjects/HomePage";
+import { HomePage } from "pageObjects/HomePage";
 
 export class ChallengePage extends HomePage {
     get challengeTitle() {

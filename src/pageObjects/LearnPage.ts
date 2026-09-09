@@ -1,5 +1,5 @@
-import { HomePage } from "src/pageObjects/HomePage";
-import type { ChallengesPeriodicity } from "src/constants/challengesPeriodicity";
+import { HomePage } from "pageObjects/HomePage";
+import type { ChallengesPeriodicity } from "constants/challengesPeriodicity";
 
 export class LearnPage extends HomePage {
     async getChallengeButton(period: ChallengesPeriodicity) {
