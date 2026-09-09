@@ -8,7 +8,11 @@
 
     "paths": {
       "src/*": ["./src/*.ts"],
-      "solution/*": ["./*.ts"]
+      "utils/*": ["./src/utils/*.ts"],
+      "solution/*": ["./*.ts"],
+      "constants/*": ["./src/constants/*.ts"],
+      "pageObjects/*": ["./src/pageObjects/*.ts"],
+      "types": ["./src/types/*.ts"]
     },
 
     "strict": true,

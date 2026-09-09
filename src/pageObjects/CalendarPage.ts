@@ -1,6 +1,6 @@
-import { HomePage } from "src/pageObjects/HomePage";
-import { getChallengePeriodicityText } from "src/utils/getChallengePeriodicityText";
-import { ChallengesPeriodicity } from "src/constants/challengesPeriodicity";
+import { HomePage } from "pageObjects/HomePage";
+import { getChallengePeriodicityText } from "utils/getChallengePeriodicityText";
+import { ChallengesPeriodicity } from "constants/challengesPeriodicity";
 import {
     getChallengeDayHrefSelector,
     parseDisplayedMonthLabel,
@@ -9,8 +9,8 @@ import {
     type CalendarDayContext,
     type CalendarDayInput,
     type DesiredMonthContext,
-} from "src/utils/calendar";
-import { parseMonth, requireTemporal } from "src/utils/date";
+} from "src/utils/date/calendar";
+import { parseMonth, requireTemporal } from "utils/date/date";
 
 export class CalendarPage extends HomePage {
     private displayedYear = Temporal.Now.plainDateISO().year;

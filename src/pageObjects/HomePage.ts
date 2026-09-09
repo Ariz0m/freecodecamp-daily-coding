@@ -1,6 +1,6 @@
-import type { ChallengesPeriodicity } from "src/constants/challengesPeriodicity";
+import type { ChallengesPeriodicity } from "constants/challengesPeriodicity";
 import { browser } from "src/setup";
-import { getChallengePeriodicityText } from "src/utils/getChallengePeriodicityText";
+import { getChallengePeriodicityText } from "utils/getChallengePeriodicityText";
 
 export class HomePage {
   private Browser = browser;
