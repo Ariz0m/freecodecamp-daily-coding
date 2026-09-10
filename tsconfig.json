@@ -12,7 +12,8 @@
       "solution/*": ["./*.ts"],
       "constants/*": ["./src/constants/*.ts"],
       "pageObjects/*": ["./src/pageObjects/*.ts"],
-      "types/*": ["./src/types/*.ts"]
+      "types/*": ["./src/types/*.ts"],
+      "date/*": ["./src/utils/date/*.ts"]
     },
 
     "strict": true,

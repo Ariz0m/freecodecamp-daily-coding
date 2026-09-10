@@ -1,6 +1,6 @@
 import { DEFAULT_LOCALE } from "constants/defaultLocale";
-import { parseMonth } from "utils/date/parseMonth";
-import { parseYear } from "utils/date/parseYear";
+import { parseMonth } from "date/parseMonth";
+import { parseYear } from "date/parseYear";
 import { formatMonthFolder } from "utils/formatDirectory/formatMonthFolder";
 
 export type ResolveYearMonthOptions = {

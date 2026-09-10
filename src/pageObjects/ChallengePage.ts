@@ -13,7 +13,7 @@ export class ChallengePage extends HomePage {
         return this.$('[data-playwright-test-label="editor-pane"]');
     }
 
-    get functionAndParams() {
-        const code = this.codeCanvas;
-    }
+    // get functionAndParams() {
+    //     const code = this.codeCanvas;
+    // }
 }

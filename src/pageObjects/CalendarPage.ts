@@ -1,75 +1,82 @@
+import { ChallengesPeriodicityText } from "constants/challengesPeriodicityText";
+import { DEFAULT_LOCALE } from "constants/defaultLocale";
 import { HomePage } from "pageObjects/HomePage";
 import {
-    getChallengeDayHrefSelector,
-    parseDisplayedMonthLabel,
     resolveDesiredYearMonth,
     toPlainDate,
     type CalendarDayContext,
     type CalendarDayInput,
     type DesiredMonthContext,
-} from "src/utils/date/calendar";
-import { parseMonth } from "utils/date/parseMonth";
-import { ChallengesPeriodicityText } from "src/constants/challengesPeriodicityText";
+} from "date/calendar";
+import { parseMonth } from "date/parseMonth";
+
+type MonthNavigationDirection = 'previous' | 'next';
 
 export class CalendarPage extends HomePage {
     private displayedYear = Temporal.Now.plainDateISO().year;
 
+    private CHALLENGE_DAY_HREF_PREFIX = "/learn/daily-coding-challenge/";
+    
+    private readonly MonthNavigationDirectionText: Readonly<Record<MonthNavigationDirection, MonthNavigationDirection>> = {
+        previous: 'previous',
+        next: 'next',
+    }
+    
+    private readonly MonthNavigationDirectionSymbol: Readonly<Record<MonthNavigationDirection, string>> = {
+        previous: '<',
+        next: '>'
+    }
+    
     get goToTodaysChallengeButton() {
         return this.$(`a=${ChallengesPeriodicityText.DAILY}`);
     }
-
+    
     get currentDisplayedMonth() {
         return this.$('h2.text-center');
     }
-
+    
     get previousMonthButton() {
-        return this.$(`button=${MONTH_NAVIGATION_BUTTON_LABELS.previous}`);
+        return this.$(`button=${this.MonthNavigationDirectionSymbol.previous}`);
     }
-
+    
     get nextMonth() {
-        return this.$(`button=${MONTH_NAVIGATION_BUTTON_LABELS.next}`);
+        return this.$(`button=${this.MonthNavigationDirectionSymbol.next}`);
     }
 
-    async moveToDesiredYear(year: number, fromYear?: number) {
-        const referenceYear = fromYear ?? this.displayedYear;
-        const diffYears = year - referenceYear;
-
-        if (diffYears === 0) return;
-
-        const direction =
-            diffYears < 0
-                ? MonthNavigationDirection.previous
-                : MonthNavigationDirection.next;
-        await this.navigateMonths(Math.abs(diffYears) * 12, direction);
+    formatChallengeHrefSlug(date: Temporal.PlainDate): string {
+        const month = String(date.month).padStart(2, "0");
+        const day = String(date.day).padStart(2, "0");
+        return `${month}-${day}`;
     }
 
-    async moveToDesiredMonth(desiredDay: DesiredMonthContext) {
-
-        const target = resolveDesiredYearMonth(desiredDay);
-        let displayed = await this.getDisplayedYearMonth();
-
-        if (displayed.year !== target.year) {
-            await this.moveToDesiredYear(target.year, displayed.year);
-            displayed = await this.getDisplayedYearMonth();
-        }
-
-        const monthDiff = target.month - displayed.month;
-        if (monthDiff === 0) return;
-
-        const direction =
-            monthDiff < 0
-                ? MonthNavigationDirection.previous
-                : MonthNavigationDirection.next;
-        await this.navigateMonths(Math.abs(monthDiff), direction);
+    formatChallengeDayHref(date: Temporal.PlainDate): string {
+        return `${this.CHALLENGE_DAY_HREF_PREFIX}${this.formatChallengeHrefSlug(date)}`;
     }
 
+    parseDisplayedMonthLabel(
+      monthLabel: string,
+      year: number,
+      locale: string = DEFAULT_LOCALE,
+    ): Temporal.PlainYearMonth {
+      
+    
+      return Temporal.PlainYearMonth.from({
+        year,
+        month: parseMonth(monthLabel.trim(), 1, locale),
+      });
+    }
+
+    getChallengeDayHrefSelector(date: Temporal.PlainDate): string {
+        return `a[data-playwright-test-label="calendar-day"][href="${this.formatChallengeDayHref(date)}"]`;
+    }
+    
     private async getDisplayedYearMonth(): Promise<Temporal.PlainYearMonth> {
         const monthLabel = await this.currentDisplayedMonth.getText();
-        return parseDisplayedMonthLabel(monthLabel, this.displayedYear);
+        return this.parseDisplayedMonthLabel(monthLabel, this.displayedYear);
     }
 
     private getMonthButton(direction: MonthNavigationDirection) {
-        return direction === MonthNavigationDirection.previous
+        return direction === this.MonthNavigationDirectionText.previous
             ? this.previousMonthButton
             : this.nextMonth;
     }
@@ -99,22 +106,42 @@ export class CalendarPage extends HomePage {
         }
     }
 
+    async moveToDesiredYear(year: number, fromYear?: number) {
+        const referenceYear = fromYear ?? this.displayedYear;
+        const diffYears = year - referenceYear;
+
+        if (diffYears === 0) return;
+
+        const direction =
+            diffYears < 0
+                ? this.MonthNavigationDirectionText.previous
+                : this.MonthNavigationDirectionText.next;
+        await this.navigateMonths(Math.abs(diffYears) * 12, direction);
+    }
+
+    async moveToDesiredMonth(desiredDay: DesiredMonthContext) {
+
+        const target = resolveDesiredYearMonth(desiredDay);
+        let displayed = await this.getDisplayedYearMonth();
+
+        if (displayed.year !== target.year) {
+            await this.moveToDesiredYear(target.year, displayed.year);
+            displayed = await this.getDisplayedYearMonth();
+        }
+
+        const monthDiff = target.month - displayed.month;
+        if (monthDiff === 0) return;
+
+        const direction =
+            monthDiff < 0
+                ? this.MonthNavigationDirectionText.previous
+                : this.MonthNavigationDirectionText.next;
+        await this.navigateMonths(Math.abs(monthDiff), direction);
+    }
+
     async getChallengeByDay(day: CalendarDayInput, context?: CalendarDayContext) {
         const date = toPlainDate(day, context);
         await this.moveToDesiredMonth(date);
-        return this.$(getChallengeDayHrefSelector(date));
+        return this.$(this.getChallengeDayHrefSelector(date));
     }
 }
-
-const MonthNavigationDirection = {
-    previous: "previous",
-    next: "next",
-} as const;
-
-type MonthNavigationDirection =
-    (typeof MonthNavigationDirection)[keyof typeof MonthNavigationDirection];
-
-const MONTH_NAVIGATION_BUTTON_LABELS: Record<MonthNavigationDirection, string> = {
-    [MonthNavigationDirection.previous]: "<",
-    [MonthNavigationDirection.next]: ">",
-};
