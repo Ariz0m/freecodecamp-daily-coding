@@ -1,7 +1,7 @@
-import type { Month } from "src/types/Month";
-import type { YearByLength, YearLength } from "src/types/NumberFormats";
+import type { Month } from "types/Month";
+import type { YearByLength, YearLength } from "types/Year";
+import type { DelimiterNoSpace } from "types/DelimiterNoSpace";
 
-type DelimiterNoSpace = "/" | "-";
 type Delimiter = " " | DelimiterNoSpace;
 
 type YearMonthWithDelimiter<D extends Delimiter, L extends YearLength = 4> =

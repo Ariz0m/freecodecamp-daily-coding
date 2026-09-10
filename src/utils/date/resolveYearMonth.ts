@@ -1,11 +1,13 @@
 import { DEFAULT_LOCALE } from "constants/defaultLocale";
 import { parseMonth } from "date/parseMonth";
 import { parseYear } from "date/parseYear";
+import type { Month } from "src/types/Month";
+import type { Year } from "src/types/Year";
 import { formatMonthFolder } from "utils/formatDirectory/formatMonthFolder";
 
 export type ResolveYearMonthOptions = {
-  yearInput?: string;
-  monthInput?: string;
+  yearInput?: Year;
+  monthInput?: Month;
   referenceDate?: Temporal.PlainDate;
   locale?: string;
 };
@@ -18,12 +20,10 @@ export type ResolvedYearMonth = {
 export function resolveYearMonth(
   options: ResolveYearMonthOptions = {},
 ): ResolvedYearMonth {
-  
-
   const locale = options.locale ?? DEFAULT_LOCALE;
   const today = options.referenceDate ?? Temporal.Now.plainDateISO();
   const year = parseYear(options.yearInput, today.year);
-  const month = parseMonth(options.monthInput, today.month, locale);
+  const month = parseMonth(options.monthInput, today.month);
 
   let yearMonth: Temporal.PlainYearMonth;
   try {

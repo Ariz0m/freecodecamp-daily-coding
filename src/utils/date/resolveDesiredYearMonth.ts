@@ -1,7 +1,8 @@
 import type { DesiredMonthContext } from "date/calendar";
-import { parseMonth } from "./parseMonth.js";
-import { parseYear } from "./parseYear.js";
-import type { Month } from "src/types/Month";
+import { parseMonth } from "date/parseMonth";
+import { parseYear } from "date/parseYear";
+import type { Month } from "types/Month";
+import type { Year } from "types/Year";
 
 
 export function resolveDesiredYearMonth(
@@ -34,7 +35,7 @@ export function resolveDesiredYearMonth(
       }
 
       return Temporal.PlainYearMonth.from({
-        year: parseYear(yearPart, referenceDate.year),
+        year: parseYear(yearPart as Year, referenceDate.year),
         month: parseMonth(monthPart as Month, referenceDate.month),
       });
     }
@@ -52,7 +53,7 @@ export function resolveDesiredYearMonth(
     ? referenceDate.year
     : typeof desiredDay.year === "number"
       ? desiredDay.year
-      : parseYear(desiredDay.year, referenceDate.year);
+      : parseYear(desiredDay.year as Year, referenceDate.year);
 
   return Temporal.PlainYearMonth.from({ year, month });
 }

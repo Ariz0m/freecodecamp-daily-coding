@@ -1,6 +1,7 @@
+import type { DelimiterNoSpace } from "types/DelimiterNoSpace";
+
 type TemplateLiteralPart = string | number;
 type Delimiter = " " | "/" | "-";
-type DelimiterNoSpace = "/" | "-";
 
 type TwoParts<
   D extends Delimiter,
