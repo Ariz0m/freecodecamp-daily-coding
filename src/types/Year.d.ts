@@ -1,7 +1,8 @@
 type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+type ValidTwoDigits = 1 | 2;
 
-export type TwoDigitYearString = `${Digit}${Digit}`;
-export type FourDigitYearString = `${Digit}${Digit}${Digit}${Digit}`;
+export type TwoDigitYearString = `${ValidTwoDigits}${Digit}`;
+export type FourDigitYearString = `${2}${0}${ValidTwoDigits}${Digit}`;
 
 export type TwoDigitYear = number | TwoDigitYearString;
 export type FourDigitYear = number | FourDigitYearString;
