@@ -1,30 +1,30 @@
-import { DEFAULT_LOCALE } from "constants/defaultLocale";
+import type { Month } from "src/types/Month";
+import { MonthLowercaseLongText, MonthLowercaseShortText } from "constants/months";
 
+/**
+ * Parses Month to number in a 1 - 12 basis.
+ * @param input 
+ * @param fallback 
+ * @returns 
+ */
 export function parseMonth(
-  input: string | undefined,
-  fallback: number,
-  locale: string = DEFAULT_LOCALE,
+  input: Month | undefined,
+  fallback: number
 ): number {
   if (input === undefined) return fallback;
 
-  const trimmed = input.trim();
+  const trimmed = typeof input === 'string' ? input.trim() : input;
   const asNumber = Number(trimmed);
   if (Number.isInteger(asNumber) && asNumber >= 1 && asNumber <= 12) {
     return asNumber;
   }
 
-  const needle = trimmed.toLowerCase();
-  for (let month = 1; month <= 12; month++) {
-    const sample = Temporal.PlainDate.from({ year: 2000, month, day: 1 });
-    const names = [
-      sample.toLocaleString(locale, { month: "long" }),
-      sample.toLocaleString(locale, { month: "short" }),
-    ].map((name) => name.toLowerCase());
+  const inputLowerCase = (trimmed as string).toLowerCase() as MonthLowercaseLongText | MonthLowercaseShortText;
+  const monthsText = inputLowerCase.length > 3 ? MonthLowercaseLongText : MonthLowercaseShortText;
+  const month = Object.keys(monthsText).indexOf(inputLowerCase);
+  
+  if (month === -1 ) throw new Error(`Invalid month: "${input}". Use 1-12, a short name (aug), or a long name (august).`);
 
-    if (names.includes(needle)) return month;
-  }
+  return month + 1
 
-  throw new Error(
-    `Invalid month: "${input}". Use 1-12, a short name (aug), or a long name (august).`,
-  );
 }

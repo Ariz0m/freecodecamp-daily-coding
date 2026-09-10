@@ -1,11 +1,10 @@
-import { DEFAULT_LOCALE } from "constants/defaultLocale";
 import type { CalendarDayContext } from "date/calendar";
 import { parseMonth } from "date/parseMonth";
+import type { MonthText } from "src/types/MonthText";
 
 export function parseCalendarDayString(
   input: string,
   context: CalendarDayContext): Temporal.PlainDate {
-  const locale = context.locale ?? DEFAULT_LOCALE;
   const trimmed = input.trim();
   const year = context.year ??
     context.yearMonth?.year ??
@@ -36,7 +35,7 @@ export function parseCalendarDayString(
     if (monthName === undefined || dayPart === undefined) {
       throw new Error(`Unrecognized calendar day: "${input}".`);
     }
-    const month = parseMonth(monthName, 1, locale);
+    const month = parseMonth(monthName as MonthText, 1);
     const day = Number(dayPart);
     return Temporal.PlainDate.from({ year, month, day });
   }

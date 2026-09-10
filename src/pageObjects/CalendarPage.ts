@@ -1,14 +1,14 @@
 import { ChallengesPeriodicityText } from "constants/challengesPeriodicityText";
-import { DEFAULT_LOCALE } from "constants/defaultLocale";
+import { parseMonth } from "date/parseMonth";
 import { HomePage } from "pageObjects/HomePage";
 import {
-    resolveDesiredYearMonth,
     toPlainDate,
     type CalendarDayContext,
     type CalendarDayInput,
     type DesiredMonthContext,
 } from "date/calendar";
-import { parseMonth } from "date/parseMonth";
+import { resolveDesiredYearMonth } from "src/utils/date/resolveDesiredYearMonth";
+import type { MonthText } from "src/types/MonthText";
 
 type MonthNavigationDirection = 'previous' | 'next';
 
@@ -34,6 +34,10 @@ export class CalendarPage extends HomePage {
     get currentDisplayedMonth() {
         return this.$('h2.text-center');
     }
+
+    async currentDisplayedMonthText(): Promise<MonthText> {
+        return (await this.currentDisplayedMonth.getText()).trim() as MonthText;
+    }
     
     get previousMonthButton() {
         return this.$(`button=${this.MonthNavigationDirectionSymbol.previous}`);
@@ -43,7 +47,7 @@ export class CalendarPage extends HomePage {
         return this.$(`button=${this.MonthNavigationDirectionSymbol.next}`);
     }
 
-    formatChallengeHrefSlug(date: Temporal.PlainDate): string {
+    formatChallengeHrefSlug(date: Temporal.PlainDate) {
         const month = String(date.month).padStart(2, "0");
         const day = String(date.day).padStart(2, "0");
         return `${month}-${day}`;
@@ -54,15 +58,14 @@ export class CalendarPage extends HomePage {
     }
 
     parseDisplayedMonthLabel(
-      monthLabel: string,
+      monthLabel: MonthText,
       year: number,
-      locale: string = DEFAULT_LOCALE,
     ): Temporal.PlainYearMonth {
       
     
       return Temporal.PlainYearMonth.from({
         year,
-        month: parseMonth(monthLabel.trim(), 1, locale),
+        month: parseMonth(monthLabel, 1),
       });
     }
 
@@ -71,7 +74,7 @@ export class CalendarPage extends HomePage {
     }
     
     private async getDisplayedYearMonth(): Promise<Temporal.PlainYearMonth> {
-        const monthLabel = await this.currentDisplayedMonth.getText();
+        const monthLabel = await this.currentDisplayedMonthText();
         return this.parseDisplayedMonthLabel(monthLabel, this.displayedYear);
     }
 
@@ -89,12 +92,12 @@ export class CalendarPage extends HomePage {
 
         for (let clicks = 0; clicks < totalClicks; clicks++) {
             const currentMonth = parseMonth(
-                (await this.currentDisplayedMonth.getText()).trim(),
+                await this.currentDisplayedMonthText(),
                 1,
             );
             await monthButton.click();
             const newMonth = parseMonth(
-                (await this.currentDisplayedMonth.getText()).trim(),
+                await this.currentDisplayedMonthText(),
                 1,
             );
 
@@ -120,7 +123,6 @@ export class CalendarPage extends HomePage {
     }
 
     async moveToDesiredMonth(desiredDay: DesiredMonthContext) {
-
         const target = resolveDesiredYearMonth(desiredDay);
         let displayed = await this.getDisplayedYearMonth();
 

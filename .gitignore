@@ -1,3 +1,6 @@
+# Code Editor / IDE (Optional)
+# .vscode
+
 # Dependencies
 node_modules/
 .npm/
