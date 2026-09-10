@@ -1,4 +1,4 @@
 import type { MonthText } from "types/MonthText";
-import type { NumberWithLeadingZero } from "src/types/NumberFormats";
+import type { NumberOrTextNumberWithLeadingZero } from "src/types/NumberFormats";
 
-export type Month = NumberWithLeadingZero | MonthText;
+export type Month = NumberOrTextNumberWithLeadingZero | MonthText;
