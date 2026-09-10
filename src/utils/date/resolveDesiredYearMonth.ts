@@ -46,7 +46,7 @@ export function resolveDesiredYearMonth(
     });
   }
 
-  const month = typeof desiredDay.month === "number"
+  const month: number = typeof desiredDay.month === "number"
     ? desiredDay.month
     : parseMonth(desiredDay.month, referenceDate.month);
   const year = desiredDay.year === undefined
