@@ -6,6 +6,10 @@ export class HomePage {
   private Browser = browser;
   protected URL = 'https://www.freecodecamp.org/';
 
+  get browser() {
+    return this.Browser;
+  }
+
   async init() {
     await this.browser.url(this.URL);
   }
@@ -16,10 +20,6 @@ export class HomePage {
 
   protected $$(selector: any) {
     return this.browser.$$(selector);
-  }
-
-  get browser() {
-    return this.Browser;
   }
 
   get logo() {
