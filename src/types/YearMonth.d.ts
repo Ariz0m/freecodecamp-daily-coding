@@ -1,8 +1,7 @@
 import type { Month } from "types/Month";
 import type { YearByLength, YearLength } from "types/Year";
 import type { DelimiterNoSpace } from "types/DelimiterNoSpace";
-
-type Delimiter = " " | DelimiterNoSpace;
+import type { Delimiter } from "src/types/Delimiter.d";
 
 type YearMonthWithDelimiter<D extends Delimiter, L extends YearLength = 4> =
   `${Month}${D}${YearByLength<L>}`;

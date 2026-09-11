@@ -1,9 +1,8 @@
-import type { DesiredMonthContext } from "date/calendar";
+import type { DesiredMonthContext } from "types/DesiredMonthContext";
 import { parseMonth } from "date/parseMonth";
 import { parseYear } from "date/parseYear";
 import type { Month } from "types/Month";
 import type { Year } from "types/Year";
-
 
 export function resolveDesiredYearMonth(
   desiredDay: DesiredMonthContext,

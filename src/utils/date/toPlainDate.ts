@@ -1,23 +1,6 @@
 import { parseCalendarDayString } from "date/parseCalendarDayString";
-import { type Month } from "types/Month";
-import type { YearMonth } from "src/types/YearMonth";
-
-export type CalendarDayInput = string | Date | Temporal.PlainDate;
-
-export type CalendarDayContext = {
-  yearMonth?: Temporal.PlainYearMonth;
-  year?: number;
-  locale?: string;
-};
-
-export type DesiredMonthContext =
-  | {
-      month: Month;
-      year?: string | number;
-    }
-  | YearMonth
-  | Date
-  | Temporal.PlainDate;
+import type { CalendarDayContext } from "src/types/CalendarDayContext";
+import type { CalendarDayInput } from "src/types/CalendarDayInput";
 
 export function toPlainDate(
   input: CalendarDayInput,

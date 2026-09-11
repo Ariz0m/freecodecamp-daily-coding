@@ -3,10 +3,10 @@ import { parseMonth } from "date/parseMonth";
 import { HomePage } from "pageObjects/HomePage";
 import {
     toPlainDate,
-    type CalendarDayContext,
-    type CalendarDayInput,
-    type DesiredMonthContext,
-} from "date/calendar";
+} from "date/toPlainDate";
+import { type CalendarDayInput } from "src/types/CalendarDayInput";
+import { type CalendarDayContext } from "src/types/CalendarDayContext";
+import { type DesiredMonthContext } from "src/types/DesiredMonthContext";
 import { resolveDesiredYearMonth } from "src/utils/date/resolveDesiredYearMonth";
 import type { MonthText } from "src/types/MonthText";
 

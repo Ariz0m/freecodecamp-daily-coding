@@ -1,0 +1,1 @@
+export type CalendarDayInput = string | Date | Temporal.PlainDate;

@@ -1,4 +1,4 @@
-import type { CalendarDayContext } from "date/calendar";
+import type { CalendarDayContext } from "../../types/CalendarDayContext.js";
 import { parseMonth } from "date/parseMonth";
 import type { MonthText } from "src/types/MonthText";
 
