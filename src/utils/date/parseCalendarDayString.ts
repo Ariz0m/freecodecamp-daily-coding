@@ -1,6 +1,6 @@
-import type { CalendarDayContext } from "../../types/CalendarDayContext.js";
 import { parseMonth } from "date/parseMonth";
-import type { MonthText } from "src/types/MonthText";
+import type { CalendarDayContext } from "types/CalendarDayContext";
+import type { MonthText } from "types/MonthText";
 
 export function parseCalendarDayString(
   input: string,
@@ -11,12 +11,12 @@ export function parseCalendarDayString(
     context.yearMonth?.year ??
     Temporal.Now.plainDateISO().year;
 
-  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
-    return Temporal.PlainDate.from(trimmed);
+  if (/^\d{4}[-/]\d{2}[-/]\d{2}$/.test(trimmed)) {
+    return Temporal.PlainDate.from(trimmed.replace(/\//g, "-"));
   }
 
-  if (/^\d{2}-\d{2}$/.test(trimmed)) {
-    const [monthPart, dayPart] = trimmed.split("-");
+  if (/^\d{2}[-/]\d{2}$/.test(trimmed)) {
+    const [monthPart, dayPart] = trimmed.split(/[-/]/);
     return Temporal.PlainDate.from({
       year,
       month: Number(monthPart),
@@ -33,9 +33,9 @@ export function parseCalendarDayString(
   if (ariaLabelMatch) {
     const monthName = ariaLabelMatch[1];
     const dayPart = ariaLabelMatch[2];
-    if (monthName === undefined || dayPart === undefined) {
-      throw new Error(`Unrecognized calendar day: "${input}".`);
-    }
+
+    if (monthName === undefined || dayPart === undefined) throw new Error(`Unrecognized calendar day: "${input}".`);
+
     const month = parseMonth(monthName as MonthText, 1);
     const day = Number(dayPart);
     return Temporal.PlainDate.from({ year, month, day });
