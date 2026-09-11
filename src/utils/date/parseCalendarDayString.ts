@@ -4,7 +4,8 @@ import type { MonthText } from "src/types/MonthText";
 
 export function parseCalendarDayString(
   input: string,
-  context: CalendarDayContext): Temporal.PlainDate {
+  context: CalendarDayContext
+): Temporal.PlainDate {
   const trimmed = input.trim();
   const year = context.year ??
     context.yearMonth?.year ??
