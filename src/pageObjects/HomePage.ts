@@ -1,16 +1,21 @@
 import type { ChallengesPeriodicity } from "constants/challengesPeriodicity";
-import { browser } from "src/setup";
+import { getBrowser } from "src/setup";
 import { getChallengePeriodicityText } from "utils/getChallengePeriodicityText";
 
 export class HomePage {
-  private Browser = browser;
+  private browserInstance?: Awaited<ReturnType<typeof getBrowser>>;
   protected URL = 'https://www.freecodecamp.org/';
 
   get browser() {
-    return this.Browser;
+    if (!this.browserInstance) {
+      throw new Error("HomePage not initialized. Call init() before using the browser.");
+    }
+
+    return this.browserInstance;
   }
 
   async init() {
+    this.browserInstance = await getBrowser();
     await this.browser.url(this.URL);
   }
 

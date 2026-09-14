@@ -24,6 +24,7 @@ pnpm-debug.log*
 /.next
 /out
 /.cache
+/.wdio-cache
 
 # OS generated files
 .DS_Store

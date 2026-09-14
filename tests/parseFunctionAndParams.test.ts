@@ -3,7 +3,7 @@ import type { ChallengeScrapped } from "types/ChallengeScraped";
 
 describe(parseFunctionAndParams, () => {
 
-    const outputGenerator = (functionName: string, params: string = '') => `export function ${functionName}(${params}) {\n}`;
+    const outputGenerator = (functionName: string, params: string = '') => `export function ${functionName}(${params}) {\n\t\n}`;
 
     it('Should return foo() with no params', () => {
         const obj = { functionName: 'foo', functionParams: ['']} as ChallengeScrapped;
