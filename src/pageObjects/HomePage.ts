@@ -28,7 +28,7 @@ export class HomePage {
 
   private dailyCodingClass = '.daily-coding-challenge-button';
 
-  protected async getChallengeButton(period: ChallengesPeriodicity) {
+  public async getChallengeButton(period: ChallengesPeriodicity) {
     const candidates = this.$$(this.dailyCodingClass);
     const text = getChallengePeriodicityText(period);
     for (const ele of candidates) {

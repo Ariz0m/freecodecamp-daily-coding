@@ -18,10 +18,6 @@ export class ChallengePage extends HomePage {
         return this.$('button=Console');
     }
 
-    get testOutputs() {
-        return this.$$('.test-output');
-    }
-
     get codeCanvas() {
         return this.$('[data-playwright-test-label="editor-container-scriptjs"]');
     }
