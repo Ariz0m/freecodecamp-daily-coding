@@ -5,8 +5,9 @@ import { ChallengePage } from "pageObjects/ChallengePage";
 import { LearnPage } from "pageObjects/LearnPage";
 import { toCamelCase } from "utils/string/toCamelCase";
 import type { DesiredMonthContext } from "types/DesiredMonthContext";
+import type { ChallengeScrapped } from "types/ChallengeScraped";
 
-export async function challengeScrapper(date?: DesiredMonthContext) {
+export async function challengeScrapper(date?: DesiredMonthContext): Promise<ChallengeScrapped> {
     const home = new HomePage();
     await home.init();
     const calendar = new CalendarPage();
@@ -27,7 +28,7 @@ export async function challengeScrapper(date?: DesiredMonthContext) {
 
     return {
         fileName: toCamelCase(await challengePage.challengeTitle.getText()),
-        funtionName: await challengePage.functionName(),
+        functionName: await challengePage.functionName(),
         functionParams: await challengePage.functionParams(),
         tests
     };

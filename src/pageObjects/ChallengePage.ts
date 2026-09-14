@@ -1,4 +1,5 @@
 import { HomePage } from "pageObjects/HomePage";
+import type { FunctionCallAndExpected, TestOutputs } from "types/ChallengeScraped";
 import type { ChainablePromiseElement } from "webdriverio";
 
 export class ChallengePage extends HomePage {
@@ -64,12 +65,12 @@ export class ChallengePage extends HomePage {
         return this.$$('[data-playwright-test-label="test-result"]');
     }
 
-    async testResults(): Promise<string[][]> {
-        const actualAndExpectedList: string[][] = [];
+    async testResults(): Promise<TestOutputs> {
+        const actualAndExpectedList: TestOutputs = [];
 
         for (const listItem of this.testResultsList) {
             const actualAndExpected = listItem.$$('<code />');
-            actualAndExpectedList.push(await Promise.all([actualAndExpected[0]?.getText(), actualAndExpected[1]?.getText()]) as string[]);
+            actualAndExpectedList.push(await Promise.all([actualAndExpected[0]?.getText(), actualAndExpected[1]?.getText()]) as FunctionCallAndExpected);
         }
 
         const listLength = actualAndExpectedList.length;
