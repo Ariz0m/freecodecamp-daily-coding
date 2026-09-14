@@ -1,6 +1,6 @@
 export type ChallengeLocation = {
   year: number;
-  month: number;
-  monthFolder: string;
+  month: string;
   fileName: string;
+  functionName: string;
 };

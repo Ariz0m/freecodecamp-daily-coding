@@ -11,5 +11,5 @@ export function parseFunctionAndParams({ functionName, functionParams }: Challen
         if (index < functionParams.length - 1) params += ', ';
     }
 
-    return `export function ${functionName}(${params}) {\n}`;
+    return `export function ${functionName}(${params}) {\n\t\n}`;
 }
