@@ -4,11 +4,11 @@ import { HomePage } from "pageObjects/HomePage";
 import {
     toPlainDate,
 } from "date/toPlainDate";
-import { type CalendarDayInput } from "src/types/CalendarDayInput";
-import { type CalendarDayContext } from "src/types/CalendarDayContext";
-import { type DesiredMonthContext } from "src/types/DesiredMonthContext";
-import { resolveDesiredYearMonth } from "src/utils/date/resolveDesiredYearMonth";
-import type { MonthText } from "src/types/MonthText";
+import type { CalendarDayInput } from "types/CalendarDayInput";
+import type { CalendarDayContext } from "types/CalendarDayContext";
+import type { DesiredMonthContext } from "types/DesiredMonthContext";
+import { resolveDesiredYearMonth } from "date/resolveDesiredYearMonth";
+import type { MonthText } from "types/MonthText";
 
 type MonthNavigationDirection = 'previous' | 'next';
 
